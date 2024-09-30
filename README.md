@@ -7,7 +7,7 @@ A Python library for searching Tunisian court cases.
 You can install the library using pip:
 
 ```
-pip install court_case_search
+pip install tun_justice
 ```
 
 ## Usage
