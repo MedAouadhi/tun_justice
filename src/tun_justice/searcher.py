@@ -32,7 +32,7 @@ class CourtCaseSearcher:
     BASE_URL = "http://services.e-justice.tn/consultation/tdossierpalier2list.php"
     DETAIL_BASE_URL = "http://services.e-justice.tn/consultation/"
 
-    def __init__(self, log_level: int = logging.INFO):
+    def __init__(self, log_level: int = logging.ERROR):
         """
         Initialize the CourtCaseSearcher.
 
