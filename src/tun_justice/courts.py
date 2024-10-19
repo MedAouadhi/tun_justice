@@ -174,14 +174,27 @@ class TribunalException(Exception):
 
 
 class Tribunal:
-    def __init__(self, name: str):
-        self.name = name
-        self.court_option = get_court_option_from_name(name)
+    def __init__(self, identifier: str):
+        self.court_option = self._get_court_option(identifier)
         if self.court_option is None:
-            raise TribunalException(f"Court {name} not found")
+            raise TribunalException(f"Court with identifier '{identifier}' not found")
+        self.name = self.court_option.label
 
     def get_id(self) -> str:
         return self.court_option.value
+
+    def _get_court_option(self, identifier: str) -> Optional[CourtOption]:
+        # First, try to find by name
+        court = get_court_option_from_name(identifier)
+        if court:
+            return court
+
+        # If not found by name, try to find by ID
+        for court in court_options:
+            if court.value == identifier:
+                return court
+
+        return None
 
 
 if __name__ == "__main__":
@@ -197,3 +210,17 @@ if __name__ == "__main__":
 
     tribubal = Tribunal("محكمة الاستئناف بتونس")
     assert tribubal.get_id() == "1100", "Value should be 1100"
+
+    # Test creating Tribunal with ID
+    tribunal_by_id = Tribunal("1100")
+    assert (
+        tribunal_by_id.name == "محكمة الاستئناف بتونس"
+    ), "Name should be محكمة الاستئناف بتونس"
+
+    # Test with invalid identifier
+    try:
+        Tribunal("Invalid Court")
+    except TribunalException as e:
+        assert (
+            str(e) == "Court with identifier 'Invalid Court' not found"
+        ), "Should raise TribunalException with correct message"
