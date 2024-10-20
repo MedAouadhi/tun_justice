@@ -1,12 +1,11 @@
 import logging
 import requests
 from bs4 import BeautifulSoup
-from typing import List, Optional, Dict
+from typing import List, Dict
 from dataclasses import dataclass
 from .courts import Tribunal
 from typing import ClassVar
 import time
-import inspect
 
 logger = logging.getLogger(__name__)
 
